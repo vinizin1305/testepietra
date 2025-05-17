@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Vinícius & Pietra - 8 Meses</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #1a001a, #4b0082);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        h1 {
+            font-size: 3em;
+            color: #cc99ff;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+        .timer {
+            font-size: 1.2em;
+            color: #ffccff;
+            margin-top: 10px;
+        }
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 20px;
+        }
+        .photos img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border: 5px solid #cc99ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #cc99ff;
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('assets/hearts.png');
+            background-size: contain;
+            animation: fall 10s linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        audio {
+            margin-top: 20px;
+        }
+        #playMsg {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vinícius & Pietra</h1>
+    <p>
+        Hoje comemoramos 8 meses de uma história linda, cheia de carinho, risadas, parceria e muito amor. <br>
+        Desde o dia em que eu te pedi em namoro, Pietra, tudo mudou pra melhor. <br>
+        Você é o melhor presente que Deus poderia ter me dado. <br>
+        Esse site é só um pedacinho do que sinto por você. <br>
+        Te amo infinito!
+    </p>
+    <div class="timer" id="tempoJuntos"></div>
+
+    <div class="photos">
+        <img src="assets/img1.jpg" alt="Foto 1">
+        <img src="assets/img2.jpg" alt="Foto 2">
+        <img src="assets/img3.jpg" alt="Foto 3">
+        <img src="assets/img4.jpg" alt="Foto 4">
+    </div>
+
+    <audio id="musica" controls loop>
+        <source src="assets/alianca.mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+    <div id="playMsg">Se a música não tocar automaticamente, clique em qualquer lugar da tela para ouvir.</div>
+
+    <div class="hearts" id="hearts-container"></div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('musica');
+            const tryPlay = () => audio.play().catch(() => {});
+            document.body.addEventListener('click', tryPlay, { once: true });
+            setTimeout(tryPlay, 1500);
+        });
+
+        function atualizarTemporizador() {
+            const inicio = new Date('2024-09-19T01:00:00');
+            const agora = new Date();
+            const diff = agora - inicio;
+
+            const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
+            const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+            const minutos = Math.floor(diff / (1000 * 60)) % 60;
+
+            document.getElementById('tempoJuntos').innerText =
+                `Estamos juntos há ${String(meses).padStart(2, '0')} meses, ${String(dias).padStart(2, '0')} dias, ${String(horas).padStart(2, '0')} horas e ${String(minutos).padStart(2, '0')} minutos.`;
+        }
+
+        setInterval(atualizarTemporizador, 1000);
+        atualizarTemporizador();
+
+        const container = document.getElementById('hearts-container');
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 10 + 's';
+            heart.style.opacity = Math.random();
+            container.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
