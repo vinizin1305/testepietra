@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vinicios & Pietra - 8 Meses</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1a001a, #4b0082);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      color: #cc99ff;
+      margin-top: 20px;
+    }
+    p {
+      font-size: 1.2em;
+      max-width: 700px;
+      margin: 20px auto;
+      line-height: 1.8;
+    }
+    .timer {
+      font-size: 1.1em;
+      color: #ffccff;
+      margin-bottom: 20px;
+    }
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 550px;
+      margin: 30px auto;
+    }
+    .photos img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border: 5px solid #cc99ff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #cc99ff;
+    }
+    #playButton {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #cc99ff;
+      border: none;
+      border-radius: 5px;
+      color: #1a001a;
+      cursor: pointer;
+    }
+    #playMsg {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('assets/hearts.png');
+      background-size: contain;
+      animation: fall 10s linear infinite;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Vinicios & Pietra</h1>
+  <p>
+    Hoje comemoramos 8 meses de uma história linda, cheia de carinho, risadas, parceria e muito amor. <br />
+    Desde o dia em que eu te pedi em namoro, Pietra, tudo mudou pra melhor. <br />
+    Você é o melhor presente que Deus poderia ter me dado. <br /><br />
+    Cada momento ao seu lado me faz perceber o quanto sou abençoado por ter você. <br />
+    Teu sorriso ilumina meus dias, tua voz acalma meu coração e tua presença transforma tudo ao meu redor. <br /><br />
+    Nesses 8 meses, aprendemos, crescemos e fortalecemos um laço que é só nosso. <br />
+    E mesmo com os altos e baixos da vida, o nosso amor sempre vence, sempre floresce. <br /><br />
+    Esse site é só um pedacinho do que sinto por você. <br />
+    Um espaço feito com amor, para te lembrar o quanto você é importante pra mim. <br /><br />
+    Te amo infinito, Pietra. E mal posso esperar pelos próximos meses — e anos — ao seu lado.
+  </p>
+
+  <div class="timer" id="tempoJuntos"></div>
+
+  <div class="photos">
+    <img src="assets/img1.jpg" alt="Foto 1" />
+    <img src="assets/img2.jpg" alt="Foto 2" />
+    <img src="assets/img3.jpg" alt="Foto 3" />
+    <img src="assets/img4.jpg" alt="Foto 4" />
+    <img src="assets/img5.jpg" alt="Foto 5" />
+    <img src="assets/img6.jpg" alt="Foto 6" />
+    <img src="assets/img7.jpg" alt="Foto 7" />
+  </div>
+
+  <audio id="musica" loop autoplay>
+    <source src="assets/alianca.mp3" type="audio/mpeg" />
+    Seu navegador não suporta áudio.
+  </audio>
+  <button id="playButton">Tocar música</button>
+  <div id="playMsg">Se a música não tocar automaticamente, clique no botão acima.</div>
+
+  <div class="hearts" id="hearts-container"></div>
+
+  <script>
+    const audio = document.getElementById('musica');
+    const btnPlay = document.getElementById('playButton');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        audio.play().catch(() => {});
+      }, 1500);
+    });
+
+    btnPlay.addEventListener('click', () => {
+      audio.play().catch(() => {});
+      btnPlay.style.display = 'none';
+    });
+
+    function atualizarTemporizador() {
+      const inicio = new Date('2024-09-19T01:00:00');
+      const agora = new Date();
+      const diff = agora - inicio;
+
+      const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
+      const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      const minutos = Math.floor(diff / (1000 * 60)) % 60;
+
+      document.getElementById('tempoJuntos').innerText =
+        `Estamos juntos há ${String(meses).padStart(2, '0')} meses, ${String(dias).padStart(2, '0')} dias, ${String(horas).padStart(2, '0')} horas e ${String(minutos).padStart(2, '0')} minutos.`;
+    }
+
+    setInterval(atualizarTemporizador, 1000);
+    atualizarTemporizador();
+
+    const container = document.getElementById('hearts-container');
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = Math.random() * 10 + 's';
+      heart.style.opacity = Math.random();
+      container.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
